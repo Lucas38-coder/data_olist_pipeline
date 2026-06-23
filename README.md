@@ -1,154 +1,186 @@
-🚀 OLIST PIPELINE
-End-to-end Data & ML Platform (Bronze → Silver → Gold → ML)
+# 🚀 OLIST PIPELINE TURMA2
+### End-to-end Data & ML Pipeline (Bronze → Silver → Gold → ML)
 
 Pipeline completo de engenharia de dados e machine learning para previsão de atrasos logísticos no e-commerce Olist.
 
-🧭 Overview
+---
 
-Este projeto implementa uma arquitetura moderna de dados com camadas bem definidas, desde ingestão bruta até modelagem preditiva.
+## 🧭 Overview
+
+Este projeto implementa uma arquitetura de dados em camadas, desde ingestão bruta até modelagem preditiva.
 
 O objetivo é transformar dados transacionais em insights acionáveis para redução de atrasos de entrega.
 
-🎯 Business Problem
+---
+
+## 🎯 Business Problem
 
 O e-commerce enfrenta atrasos logísticos que impactam:
 
-Experiência do cliente
-Custos operacionais
-Eficiência da cadeia logística
-Objetivo:
+- Experiência do cliente  
+- Custos operacionais  
+- Eficiência logística  
 
-Prever pedidos com alta probabilidade de atraso (is_late_delivery) para permitir ação preventiva.
+### Objetivo
+Prever pedidos com alta probabilidade de atraso (`is_late_delivery`) para permitir ações preventivas.
 
-Métrica de sucesso:
+### Métrica de sucesso
+- Maximizar **recall de atrasos**
+- Manter **precision controlada**
 
-Maximizar recall de atrasos, mantendo precision controlada para evitar alertas excessivos.
+---
 
-🏗️ Architecture
-            ┌────────────────────┐
-            │   OLIST RAW CSVs   │
-            └─────────┬──────────┘
-                      │
-                      ▼
-            ┌────────────────────┐
-            │      BRONZE        │
-            │ Ingestion (DuckDB) │
-            └─────────┬──────────┘
-                      │
-                      ▼
-            ┌────────────────────┐
-            │      SILVER        │
-            │ Cleaning & Models  │
-            └─────────┬──────────┘
-                      │
-                      ▼
-            ┌────────────────────┐
-            │       GOLD         │
-            │ Facts & Dimensions │
-            └─────────┬──────────┘
-                      │
-                      ▼
-            ┌────────────────────┐
-            │        ML          │
-            │ Feature + Models   │
-            └────────────────────┘
-🧱 Data Layers
-🟤 Bronze (Raw Ingestion)
-CSVs originais da Olist
-Conversão para Parquet
-Timestamp de ingestão
-Implementação com DuckDB
-⚪ Silver (Cleaning & Standardization)
-Limpeza por domínio:
-Customers
-Sellers
-Orders
-Payments
-Items
-Reviews
-Geolocation
-Dados padronizados e prontos para modelagem
-🟡 Gold (Analytics Layer)
-Modelagem dimensional:
-Facts (orders, reviews)
-Dimensions (customers, products, date, sellers)
-Base para análises e ML
-🔵 ML Layer (Predictive Modeling)
+## 🏗️ Architecture
 
-Pipeline completo:
+OLIST RAW CSVs
+↓
+BRONZE (Ingestion - DuckDB)
+↓
+SILVER (Cleaning & Standardization)
+↓
+GOLD (Facts & Dimensions)
+↓
+ML LAYER (Feature Engineering + Models)
 
-Feature engineering
-Data validation
-EDA
-Model training
-Evaluation & tuning
+
+---
+
+## 🧱 Data Layers
+
+### 🟤 Bronze
+- Ingestão dos CSVs originais
+- Conversão para Parquet
+- Timestamp de ingestão
+- DuckDB como engine de processamento
+
+---
+
+### ⚪ Silver
+- Limpeza e padronização
+- Entidades:
+  - customers
+  - sellers
+  - orders
+  - payments
+  - order_items
+  - reviews
+  - geolocation
+
+---
+
+### 🟡 Gold
+- Modelagem dimensional:
+  - Facts (orders, reviews)
+  - Dimensions (customers, products, date, sellers)
+
+---
+
+### 🔵 ML Layer
+Pipeline de machine learning:
+
+- Feature engineering
+- Data validation
+- EDA
+- Treinamento de modelos
+- Avaliação
 
 Modelos:
+- Logistic Regression
+- Random Forest
+- LightGBM
+- CatBoost (proposta)
 
-Logistic Regression
-Random Forest
-LightGBM
-CatBoost (proposta)
-⚙️ Tech Stack
-Python 3.x
-DuckDB
-Pandas / NumPy
-Scikit-Learn
-LightGBM / CatBoost
-SHAP (explainability)
-Matplotlib
+---
 
-Storage:
+## ⚙️ Tech Stack
 
-Parquet (columnar format)
-📊 Model Evaluation Strategy
-Precision / Recall / F1
-ROC-AUC
-Precision-Recall curve
-Threshold tuning (0.3 → 0.7)
-Confusion Matrix analysis
-Business focus:
+- Python 3.x
+- DuckDB
+- Pandas / NumPy
+- Scikit-Learn
+- LightGBM / CatBoost
+- SHAP
+- Matplotlib / Seaborn
+- Parquet
 
-Trade-off entre:
+---
 
-Detecção de atrasos (Recall)
-Evitar falsos alarmes (Precision)
-🔍 Key Insights
-Variáveis logísticas são altamente preditivas:
-distância (distance_km)
-rota (route_*)
-freight ratio
-Transformações log melhoram estabilidade dos modelos
-Certas rotas apresentam padrões consistentes de atraso
-SHAP mostra forte contribuição de features logísticas vs financeiras
-🧠 Explainability
-SHAP utilizado para:
-interpretação global do modelo
-análise de decisões individuais
-ranking de importância de features
-🔁 Reproducibility
-Pipeline baseado em DuckDB + Parquet
-Execução determinística com seeds
-Dados brutos não versionados (.gitignore)
-Estrutura modular por camadas
-🚀 Roadmap
-CatBoost com tuning avançado
-Class imbalance handling (SMOTE / weighting)
-Model stacking
-Pipeline automatizado (Makefile / DAG)
-CI/CD com GitHub Actions
-Dockerização do ambiente
-Deploy de modelo (API simples)
-📁 Project Structure
+## 📊 Model Evaluation
+
+Métricas utilizadas:
+
+- Precision
+- Recall
+- F1-score
+- ROC-AUC
+- Confusion Matrix
+
+### Estratégia
+- Threshold tuning (0.3 → 0.7)
+- Trade-off entre recall e precision
+
+---
+
+## 🔍 Key Insights
+
+- Variáveis logísticas são altamente preditivas:
+  - distance_km
+  - route_*
+  - freight_ratio
+
+- Transformações log melhoram performance
+
+- Certas rotas apresentam padrão consistente de atraso
+
+- SHAP usado para interpretabilidade
+
+---
+
+## 🧠 Explainability
+
+- SHAP para:
+  - importância global de features
+  - explicação de predições individuais
+
+---
+
+## 🔁 Reproducibility
+
+- Pipeline baseado em DuckDB + Parquet
+- Dados brutos não versionados (.gitignore)
+- Execução determinística com seeds
+- Estrutura modular por camadas
+
+---
+
+## 🚀 Roadmap
+
+- CatBoost tuning completo
+- Tratamento de desbalanceamento
+- Model stacking
+- Pipeline automatizado (Makefile / DAG)
+- CI/CD com GitHub Actions
+- Dockerização
+- Deploy de modelo (API)
+
+---
+
+## 📁 Project Structure
+
 scr/
- ├── bronze/
- ├── Silver/
- ├── Gold/
- ├── ml/
+├── bronze/
+├── Silver/
+├── Gold/
+├── ml/
+
 docs/
- ├── architecture
- ├── data schema
- ├── notebooks summaries
-📄 License
+├── architecture
+├── data_schema
+├── notebooks
+
+
+---
+
+## 📄 License
 
 MIT License
