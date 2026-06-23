@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Env
+.env
+.venv/
+venv/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+pip-wheel-metadata/
+.pytest_cache/
+
+# Logs
+logs/
+*.log
+
+# Secrets (if any)
+secrets.json
+
+# Mac
+.DS_Store
+
+# Data Lake
+data_lake/
+
+# DuckDB
+*.duckdb
+
+# Parquet
+*.parquet
+
+# CSV
+*.csv
